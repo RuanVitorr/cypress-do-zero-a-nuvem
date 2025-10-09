@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
+  projectId: 'a4sard', // projectId -> ID do projeto Cypress Dashboard (se estiver usando)
   viewportHeight: 880, // viewportHeight -> define a altura da janela do navegador usada nos testes
   viewportWidth: 1280, // viewportWidth -> define a largura da janela do navegador usada nos testes
   e2e: {
