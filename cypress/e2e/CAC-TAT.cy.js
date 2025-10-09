@@ -352,7 +352,7 @@ it('selecionar um arquivo simulando um drag-and-drop',()=>{//grag-and-drop == ar
   })//<-fechou o it
   
 
-  it.only('verifica que a politica de privacidade abre em outra aba',()=>{
+  it('verifica que a politica de privacidade abre em outra aba',()=>{
     cy.contains('a','Política de Privacidade')
       .should('have.attr', 'href','privacy.html')
       .and('have.attr','target','_blank')
