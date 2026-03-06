@@ -125,9 +125,9 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     .and('contain', 'Mensagem enviada com sucesso.')
   })
 
-  it('preenche os campos obrigatórios e envia o formulário', () => {
+  it.only('preenche os campos obrigatórios e envia o formulário', () => {
     const longText = Cypress._.repeat('Esse é um texto bem grande que eu quero digitar rapidão no campo!',5)
-
+    cy.clock()
     cy.get('#firstName')
       .as('primeiro_nome')
       .should('be.visible')
@@ -185,6 +185,9 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('.success')
     .should('be.visible')
     .and('contain', 'Mensagem enviada com sucesso.')
+
+    cy.tick(3000) 
+    cy.get('.success').should('not.be.visible')
   }) // <- fechou o it aqui
 
   it('Envia o formulário com campo email invalido', () => {
@@ -358,4 +361,32 @@ it('selecionar um arquivo simulando um drag-and-drop',()=>{//grag-and-drop == ar
       .and('have.attr','target','_blank')
 
   })
+
+  it('exibe e oculta as mensagens de sucesso e erro usando o .invoke',()=>{
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain','Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain','Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })//<-fechou o it
+
+  it('preenche o campo da área de texto usando o comando invoke', () => {
+  cy.get('#open-text-area')
+    .as('campoTexto')
+    .invoke('val', 'um texto qualquer')
+
+  cy.get('@campoTexto')
+    .should('have.value', 'um texto qualquer')
+})
+
 }) // <- fechou o describe aqui
